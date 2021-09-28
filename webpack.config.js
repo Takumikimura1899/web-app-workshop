@@ -20,7 +20,7 @@ module.exports = {
   module: {
     rules: [
       {
-        // 大勝のファイルを正規表現で記述する
+        // 対象のファイルを正規表現で記述する
         test: /\.tsx?$/,
         // TypeScript をコンパイルするローダー
         use: 'ts-loader',
