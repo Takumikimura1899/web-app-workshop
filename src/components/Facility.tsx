@@ -36,6 +36,13 @@ export const Facility: React.FC = () => {
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
+        <p>
+          <Chip
+            label="とうろくしゃ"
+            avatar={<Avatar src="https://bit.ly/3pM3urc" />}
+          />
+          {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
+        </p>
       </Paper>
     </Container>
   );
