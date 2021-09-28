@@ -31,14 +31,14 @@ export const Facility: React.FC = () => {
         <InputLabel shrink>登録者</InputLabel>
         <p>
           <Chip
-            label="とうろくしゃ"
+            label="登録者"
             avatar={<Avatar src="https://bit.ly/3pM3urc" />}
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
         <p>
           <Chip
-            label="とうろくしゃ"
+            label="変更者"
             avatar={<Avatar src="https://bit.ly/3pM3urc" />}
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
