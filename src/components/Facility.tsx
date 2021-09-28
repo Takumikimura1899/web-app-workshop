@@ -6,7 +6,10 @@ import {
   InputLabel,
   Chip,
   Avatar,
+  Grid,
+  Button,
 } from '@material-ui/core';
+import { Done, Delete } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 
@@ -18,6 +21,12 @@ const useStyle = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
+  },
+  rightActions: {
+    textAlign: 'right',
+  },
+  cancelButton: {
+    color: theme.palette.error.main,
   },
 }));
 
@@ -36,6 +45,7 @@ export const Facility: React.FC = () => {
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
+        <InputLabel shrink>変更者</InputLabel>
         <p>
           <Chip
             label="変更者"
@@ -43,6 +53,18 @@ export const Facility: React.FC = () => {
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
+        <Grid container>
+          <Grid item xs={6}>
+            <Button className={style.cancelButton} startIcon={<Delete />}>
+              削除
+            </Button>
+          </Grid>
+          <Grid item xs={6} className={style.rightActions}>
+            <Button variant="contained" color="primary" startIcon={<Done />}>
+              保存
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );
