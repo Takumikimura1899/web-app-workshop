@@ -13,7 +13,7 @@ import { Done, Delete } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import { IFacility } from '../models/IFacility';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 const initFacility: IFacility = {
   id: '',
@@ -59,32 +59,43 @@ export const Facility: React.FC = () => {
   const {
     register,
     formState: { errors },
+    control,
   } = useForm({
     defaultValues: initFacility,
     mode: 'onBlur',
   });
-  const onNameChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const newFacility: IFacility = {
-        ...facility,
-        name: e.target.value,
-      };
-      setFacility(newFacility);
-    },
-    [facility],
-  );
+
   return (
     <Container maxWidth="sm" className={style.root}>
-      <input {...register('name', { required: true })} />
-      <p>{errors.name ? '必須です' : ''}</p>
       <Paper className={style.paper}>
-        <TextField
-          label="設備名"
-          fullWidth
-          value={facility.name}
-          onChange={onNameChange}
+        <Controller
+          name="name"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="設備名"
+              fullWidth
+              error={!!errors.name}
+              helperText={errors.name ? '必須です' : ''}
+            />
+          )}
         />
-        <TextField label="詳細" fullWidth multiline value={facility.note} />
+        <Controller
+          name="note"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="詳細"
+              fullWidth
+              error={!!errors.note}
+              helperText={errors.note ? '必須です' : ''}
+            />
+          )}
+        />
         <InputLabel shrink>登録者</InputLabel>
         <p>
           <Chip
