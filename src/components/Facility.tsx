@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import {
   Container,
   Paper,
@@ -12,6 +12,27 @@ import {
 import { Done, Delete } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
+import { IFacility } from '../models/IFacility';
+
+const initFacility: IFacility = {
+  id: '',
+  name: 'name の初期値',
+  note: 'note の初期値',
+  system: {
+    createDate: new Date(),
+    createUser: {
+      displayName: 'takumi kimura',
+      email: '',
+      face: 'https://bit.ly/3pM3urc',
+    },
+    lastUpdateUser: {
+      displayName: 'takumi kimura',
+      email: '',
+      face: 'https://bit.ly/3pM3urc',
+    },
+    lastUpdate: new Date(),
+  },
+};
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -32,24 +53,41 @@ const useStyle = makeStyles((theme) => ({
 
 export const Facility: React.FC = () => {
   const style = useStyle();
+  const [facility, setFacility] = useState(initFacility);
+  const { system } = initFacility;
+  const onNameChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newFacility: IFacility = {
+        ...facility,
+        name: e.target.value,
+      };
+      setFacility(newFacility);
+    },
+    [facility],
+  );
   return (
     <Container maxWidth="sm" className={style.root}>
       <Paper className={style.paper}>
-        <TextField label="役職名" fullWidth />
-        <TextField label="詳細" fullWidth multiline />
+        <TextField
+          label="設備名"
+          fullWidth
+          value={facility.name}
+          onChange={onNameChange}
+        />
+        <TextField label="詳細" fullWidth multiline value={facility.note} />
         <InputLabel shrink>登録者</InputLabel>
         <p>
           <Chip
-            label="登録者"
-            avatar={<Avatar src="https://bit.ly/3pM3urc" />}
+            label={system.createUser.displayName}
+            avatar={<Avatar src={system.createUser.face} />}
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
         <InputLabel shrink>変更者</InputLabel>
         <p>
           <Chip
-            label="変更者"
-            avatar={<Avatar src="https://bit.ly/3pM3urc" />}
+            label={system.lastUpdateUser.displayName}
+            avatar={<Avatar src={system.lastUpdateUser.displayName} />}
           />
           {dayjs(new Date()).format('YYYY-MM-DD HH:mm')}
         </p>
