@@ -13,6 +13,7 @@ import { Done, Delete } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import { IFacility } from '../models/IFacility';
+import { useForm } from 'react-hook-form';
 
 const initFacility: IFacility = {
   id: '',
@@ -55,6 +56,13 @@ export const Facility: React.FC = () => {
   const style = useStyle();
   const [facility, setFacility] = useState(initFacility);
   const { system } = initFacility;
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initFacility,
+    mode: 'onBlur',
+  });
   const onNameChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const newFacility: IFacility = {
@@ -67,6 +75,8 @@ export const Facility: React.FC = () => {
   );
   return (
     <Container maxWidth="sm" className={style.root}>
+      <input {...register('name', { required: true })} />
+      <p>{errors.name ? '必須です' : ''}</p>
       <Paper className={style.paper}>
         <TextField
           label="設備名"
