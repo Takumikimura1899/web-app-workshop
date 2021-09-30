@@ -5,8 +5,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@date-io/dayjs": "1.x",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "^4.11.4",
     "dayjs": "^1.10.7",
     "eslint-config-prettier": "^8.3.0",

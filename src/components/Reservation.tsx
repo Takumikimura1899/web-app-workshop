@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import React from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import React, { useCallback, useState } from 'react';
 import { IReservation } from '../models/IReservation';
 import { makeStyles } from '@material-ui/core/styles';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,6 +14,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { Delete, Done } from '@material-ui/icons';
+import { DateTimePicker } from '@material-ui/pickers';
 
 const initReservation: IReservation = {
   id: '001',
@@ -71,6 +72,32 @@ export const Reservation: React.FC = () => {
   return (
     <Container maxWidth="sm" className={style.root}>
       <Paper className={style.paper}>
+        <Controller
+          control={control}
+          name="startDate"
+          render={({ field }) => (
+            <DateTimePicker
+              {...field}
+              label="開始日時"
+              format="YYYY/MM/DD HH:mm"
+              ampm={false}
+              minutesStep={15}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="endDate"
+          render={({ field }) => (
+            <DateTimePicker
+              {...field}
+              label="終了日時"
+              format="YYYY/MM/DD HH:mm"
+              ampm={false}
+              minutesStep={15}
+            />
+          )}
+        />
         <Controller
           name="subject"
           control={control}
