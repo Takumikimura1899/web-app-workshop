@@ -1,20 +1,52 @@
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useCallback, useState } from 'react';
+import dayjs from 'dayjs';
+// import React from 'react';
 import { IReservation } from '../models/IReservation';
+import { IFacility } from '../models/IFacility';
 import { makeStyles } from '@material-ui/core/styles';
 import { Controller, useForm } from 'react-hook-form';
-import {
-  Container,
-  Paper,
-  TextField,
-  InputLabel,
-  Chip,
-  Avatar,
-  Grid,
-  Button,
-} from '@material-ui/core';
-import { Delete, Done } from '@material-ui/icons';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Delete from '@material-ui/icons/Delete';
+import Done from '@material-ui/icons/Done';
 import { DateTimePicker } from '@material-ui/pickers';
+import { useMemo, useState } from 'react';
+
+// ダミーデータ
+const dummyFacilities: IFacility[] = [
+  {
+    id: '01',
+    name: '設備００１',
+    // ダミーデータのため不必要なデータの定義は省略
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    system: {} as any,
+    note: '',
+  },
+  {
+    id: '02',
+    name: '設備００２',
+    // ダミーデータのため不必要なデータの定義は省略
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    system: {} as any,
+    note: '',
+  },
+  {
+    id: '03',
+    name: '設備００３',
+    // ダミーデータのため不必要なデータの定義は省略
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    system: {} as any,
+    note: '',
+  },
+];
 
 const initReservation: IReservation = {
   id: '001',
@@ -40,13 +72,11 @@ const initReservation: IReservation = {
 };
 
 const useStyle = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-    },
-  },
   paper: {
     padding: theme.spacing(1),
+    '& > div': {
+      marginBottom: theme.spacing(2),
+    },
   },
   rightActions: {
     textAlign: 'right',
@@ -68,10 +98,30 @@ export const Reservation: React.FC = () => {
     defaultValues: initReservation,
     mode: 'onBlur',
   });
+  const [facilities] = useState<IFacility[]>(dummyFacilities);
+  const facilityMenuItems = useMemo(() => {
+    return facilities.map((f) => (
+      <MenuItem key={f.id} value={f.id}>
+        {f.name}
+      </MenuItem>
+    ));
+  }, [facilities]);
 
   return (
-    <Container maxWidth="sm" className={style.root}>
+    <Container maxWidth="sm">
       <Paper className={style.paper}>
+        <FormControl>
+          <InputLabel id="facility-label">設備</InputLabel>
+          <Controller
+            control={control}
+            name="facilityId"
+            render={({ field }) => (
+              <Select {...field} labelId="facility-label">
+                {facilityMenuItems}
+              </Select>
+            )}
+          />
+        </FormControl>
         <Controller
           control={control}
           name="startDate"
