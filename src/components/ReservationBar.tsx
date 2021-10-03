@@ -47,7 +47,7 @@ export const ReservationBar: React.FC<PropsType> = (props) => {
   const left = useMemo(() => {
     const beginDate = startDate.set('hour', beginHour).startOf('hour');
     const diffStart = startDate.diff(beginDate, 'minute') / 60;
-    return leftOffset + diffStart + hourWidth;
+    return leftOffset + diffStart * hourWidth;
   }, [beginHour, hourWidth, leftOffset, startDate]);
 
   const style = useStyles({
